@@ -31,11 +31,16 @@ io.on('connect', (socket) => {
   });
 
   socket.on('sendMessage', (message, callback) => {
-    const user = getUser(socket.id);
-
-    io.to(user.room).emit('message', { user: user.name, text: message });
-
-    callback();
+    try {
+      const user = getUser(socket.id);
+      if (!user) {
+        return callback({ error: 'User not found' });
+      }
+      io.to(user.room).emit('message', { user: user.name, text: message });
+      callback();
+    } catch (error) {
+      callback({ error: 'Message could not be sent' });
+    }
   });
 
   socket.on('disconnect', () => {
