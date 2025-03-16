@@ -4,7 +4,6 @@ const socketio = require('socket.io');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 const sanitizeHtml = require('sanitize-html');
-const mongoose = require('mongoose');
 
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./users');
 
